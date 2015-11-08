@@ -1,0 +1,8 @@
+#!/bin/bash
+if [[ "$1" == "--data" ]]; then
+    volume=$2
+    shift 2
+    docker run -d -p 8888:8888 -v $PWD:{workdir} -v $volume:{workdir}/data --name {name} -it {docker_id}
+else
+    docker run -d -p 8888:8888 -v $PWD:{workdir} --name {name} -it {docker_id}
+fi

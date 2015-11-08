@@ -1,8 +1,12 @@
 # This file must be used with "source bin/activate" *from bash*
 # you cannot run it directly
 
-deactivate () {
+deactivate () {{
     unset pydoc
+
+
+    # first stop any daemon docker containers
+    stop_docker_containers
 
     # reset old environment variables
     if [ -n "$_OLD_DOCKER_PATH" ] ; then
@@ -34,12 +38,20 @@ deactivate () {
     # Self destruct!
         unset -f deactivate
     fi
-}
+}}
+
+function stop_docker_containers() {{
+    typeset docker_name="{name}"
+    typeset docker_id=$(docker ps -a --filter="name=docker-ds" -q)
+    if [ $docker_id ]; then
+        docker stop $docker_id && docker rm $docker_id
+    fi
+}}
 
 # unset irrelevant variables
 deactivate nondestructive
 
-DOCKER_ENV=%s
+DOCKER_ENV={docker_dir}
 export DOCKER_ENV
 
 _OLD_DOCKER_PATH="$PATH"

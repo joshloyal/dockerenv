@@ -20,10 +20,15 @@ def build_python_script(docker_id, workdir):
         PYTHON_SH = py.read()
         return PYTHON_SH.format(docker_id=docker_id, workdir=workdir)
 
-def build_activate_script(docker_dir):
+def build_daemon_script(docker_id, workdir, name):
+    with open('templates/dockerenv_daemon.template', 'r') as dm:
+        DAEMON_SH = dm.read()
+        return DAEMON_SH.format(docker_id=docker_id, workdir=workdir, name=name)
+
+def build_activate_script(docker_dir, name):
     with open('templates/activate.template', 'r') as act:
         ACTIVATE = act.read()
-        return ACTIVATE%(docker_dir)
+        return ACTIVATE.format(docker_dir=docker_dir, name=name)
 
 def dockerenv_dir():
     return os.environ['HOME'] + '/.dockerenv'
@@ -73,12 +78,17 @@ def make_new_env(name, docker_id, workdir):
         IPYTHON_SH = build_ipython_script(docker_id, workdir)
         f.write(IPYTHON_SH)
 
+    with open(bin_dir+'/dockerenv-daemon', 'wr') as f:
+        DAEMON_SH = build_daemon_script(docker_id, workdir, name)
+        f.write(DAEMON_SH)
+
     with open(bin_dir+'/activate', 'wr') as f:
-        ACTIVATE = build_activate_script(envir_dir)
+        ACTIVATE = build_activate_script(envir_dir, name)
         f.write(ACTIVATE)
 
     make_executable(bin_dir+'/python')
     make_executable(bin_dir+'/ipython')
+    make_executable(bin_dir+'/dockerenv-daemon')
     make_executable(bin_dir+'/activate')
 
 def main():
