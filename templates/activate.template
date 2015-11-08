@@ -42,7 +42,7 @@ deactivate () {{
 
 function stop_docker_containers() {{
     typeset docker_name="{name}"
-    typeset docker_id=$(docker ps -a --filter="name=docker-ds" -q)
+    typeset docker_id=$(docker ps -a --filter="name=$docker_name" -q)
     if [ $docker_id ]; then
         docker stop $docker_id && docker rm $docker_id
     fi
