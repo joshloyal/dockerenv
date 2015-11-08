@@ -10,23 +10,26 @@ logging.basicConfig(level=logging.DEBUG,
 
 logger = logging.getLogger('docker_env')
 
+def resource_location(resource):
+    return os.path.join(os.path.dirname(__file__), resource)
+
 def build_ipython_script(docker_id, workdir):
-    with open('templates/ipython.template', 'r') as ipy:
+    with open(resource_location('templates/ipython.template'), 'r') as ipy:
         IPYTHON_SH = ipy.read()
         return IPYTHON_SH.format(docker_id=docker_id, workdir=workdir)
 
 def build_python_script(docker_id, workdir):
-    with open('templates/python.template', 'r') as py:
+    with open(resource_location('templates/python.template'), 'r') as py:
         PYTHON_SH = py.read()
         return PYTHON_SH.format(docker_id=docker_id, workdir=workdir)
 
 def build_daemon_script(docker_id, workdir, name):
-    with open('templates/dockerenv_daemon.template', 'r') as dm:
+    with open(resource_location('templates/dockerenv_daemon.template'), 'r') as dm:
         DAEMON_SH = dm.read()
         return DAEMON_SH.format(docker_id=docker_id, workdir=workdir, name=name)
 
 def build_activate_script(docker_dir, name):
-    with open('templates/activate.template', 'r') as act:
+    with open(resource_location('templates/activate.template'), 'r') as act:
         ACTIVATE = act.read()
         return ACTIVATE.format(docker_dir=docker_dir, name=name)
 
