@@ -5,15 +5,15 @@ deactivate () {
     unset pydoc
 
     # reset old environment variables
-    if [ -n "$_OLD_VIRTUAL_PATH" ] ; then
-        PATH="$_OLD_VIRTUAL_PATH"
+    if [ -n "$_OLD_DOCKER_PATH" ] ; then
+        PATH="$_OLD_DOCKER_PATH"
         export PATH
-        unset _OLD_VIRTUAL_PATH
+        unset _OLD_DOCKER_PATH
     fi
-    if [ -n "$_OLD_VIRTUAL_PYTHONHOME" ] ; then
-        PYTHONHOME="$_OLD_VIRTUAL_PYTHONHOME"
+    if [ -n "$_OLD_DOCKER_PYTHONHOME" ] ; then
+        PYTHONHOME="$_OLD_DOCKER_PYTHONHOME"
         export PYTHONHOME
-        unset _OLD_VIRTUAL_PYTHONHOME
+        unset _OLD_DOCKER_PYTHONHOME
     fi
 
     # This should detect bash and zsh, which have a hash command that must
@@ -23,13 +23,13 @@ deactivate () {
         hash -r 2>/dev/null
     fi
 
-    if [ -n "$_OLD_VIRTUAL_PS1" ] ; then
-        PS1="$_OLD_VIRTUAL_PS1"
+    if [ -n "$_OLD_DOCKER_PS1" ] ; then
+        PS1="$_OLD_DOCKER_PS1"
         export PS1
-        unset _OLD_VIRTUAL_PS1
+        unset _OLD_DOCKER_PS1
     fi
 
-    unset VIRTUAL_ENV
+    unset DOCKER_ENV
     if [ ! "$1" = "nondestructive" ] ; then
     # Self destruct!
         unset -f deactivate
@@ -39,32 +39,32 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/jdl67/.virtualenvs/venv"
-export VIRTUAL_ENV
+DOCKER_ENV=%s
+export DOCKER_ENV
 
-_OLD_VIRTUAL_PATH="$PATH"
-PATH="$VIRTUAL_ENV/bin:$PATH"
+_OLD_DOCKER_PATH="$PATH"
+PATH="$DOCKER_ENV/bin:$PATH"
 export PATH
 
 # unset PYTHONHOME if set
 # this will fail if PYTHONHOME is set to the empty string (which is bad anyway)
 # could use `if (set -u; : $PYTHONHOME) ;` in bash
 if [ -n "$PYTHONHOME" ] ; then
-    _OLD_VIRTUAL_PYTHONHOME="$PYTHONHOME"
+    _OLD_DOCKER_PYTHONHOME="$PYTHONHOME"
     unset PYTHONHOME
 fi
 
-if [ -z "$VIRTUAL_ENV_DISABLE_PROMPT" ] ; then
-    _OLD_VIRTUAL_PS1="$PS1"
+if [ -z "$DOCKER_ENV_DISABLE_PROMPT" ] ; then
+    _OLD_DOCKER_PS1="$PS1"
     if [ "x" != x ] ; then
         PS1="$PS1"
     else
-    if [ "`basename \"$VIRTUAL_ENV\"`" = "__" ] ; then
+    if [ "`basename \"$DOCKERJ_ENV\"`" = "__" ] ; then
         # special case for Aspen magic directories
         # see http://www.zetadev.com/software/aspen/
-        PS1="[`basename \`dirname \"$VIRTUAL_ENV\"\``] $PS1"
+        PS1="[`basename \`dirname \"$DOCKER_ENV\"\``] $PS1"
     else
-        PS1="(`basename \"$VIRTUAL_ENV\"`)$PS1"
+        PS1="(`basename \"$DOCKER_ENV\"`)$PS1"
     fi
     fi
     export PS1

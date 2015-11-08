@@ -11,14 +11,19 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger('docker_env')
 
 def build_ipython_script(docker_id, workdir):
-    with open('ipython.template', 'r') as ipy:
+    with open('templates/ipython.template', 'r') as ipy:
         IPYTHON_SH = ipy.read()
         return IPYTHON_SH.format(docker_id=docker_id, workdir=workdir)
 
 def build_python_script(docker_id, workdir):
-    with open('python.template', 'r') as py:
+    with open('templates/python.template', 'r') as py:
         PYTHON_SH = py.read()
         return PYTHON_SH.format(docker_id=docker_id, workdir=workdir)
+
+def build_activate_script(docker_dir):
+    with open('templates/activate.template', 'r') as act:
+        ACTIVATE = act.read()
+        return ACTIVATE%(docker_dir)
 
 def dockerenv_dir():
     return os.environ['HOME'] + '/.dockerenv'
@@ -68,8 +73,13 @@ def make_new_env(name, docker_id, workdir):
         IPYTHON_SH = build_ipython_script(docker_id, workdir)
         f.write(IPYTHON_SH)
 
+    with open(bin_dir+'/activate', 'wr') as f:
+        ACTIVATE = build_activate_script(envir_dir)
+        f.write(ACTIVATE)
+
     make_executable(bin_dir+'/python')
     make_executable(bin_dir+'/ipython')
+    make_executable(bin_dir+'/activate')
 
 def main():
     parser = argparse.ArgumentParser(description='Setup docker environment')

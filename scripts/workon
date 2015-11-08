@@ -1,0 +1,11 @@
+# -*- mode: shell-script -*-
+workon () {
+    environment=$1
+    activate="$HOME/.dockerenv/$1/bin/activate"
+    if [ ! -f "$activate" ]; then
+        echo "ERROR: Environment '$environment' does not contain an activate script." >&2
+        return 1
+    fi
+
+    source "$activate"
+}

@@ -4,5 +4,5 @@ if [[ "$1" == "--data" ]]; then
     shift 2
     docker run -v $volume:{workdir}/data -it {docker_id} python "$@"
 else
-    docker run -it {docker_id} python "$@"
+    docker run -v $PWD:{workdir}/data -it {docker_id} python "$@"
 fi
