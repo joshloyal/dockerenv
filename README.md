@@ -13,8 +13,8 @@ export PATH=/path/to/dockerenv/scripts:$PATH
 source /path/to/dockerenv/scripts/dockerenvwrapper
 ```
 
-Example
--------
+Usage
+-----
 This library was designed with the [jupyter/docker-stacks](https://github.com/jupyter/docker-stacks) in mind.
 To create a new dockerenv you must specify the docker tag as well as the workdir of the environment:
 ```
@@ -39,4 +39,5 @@ daemon container with the `killdockerenv` command.
 
 To Do
 -----
+* Expand use beyond the bash shell
 * Expose environmental variables to Docker.
