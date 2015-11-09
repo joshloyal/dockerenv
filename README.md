@@ -1,6 +1,6 @@
 Docker Virtual Environment
 ==========================
-Run python/ipython in a docker container similar to python's virtualenv  (work in progress).
+Run python/ipython in a docker container similar to python's virtualenv.
 
 Installation
 ------------
