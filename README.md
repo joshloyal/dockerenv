@@ -41,3 +41,4 @@ To Do
 -----
 * Expand use beyond the bash shell
 * Expose environmental variables to Docker.
+* docker-daemon should allow a choice of what ports to expose
