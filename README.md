@@ -25,8 +25,8 @@ You can then open up the dockerenv similar to virtualenvwrapper
 workon denv
 ```
 To deactivate the dockerenv simply type `deactivate`. When you run `python` or `ipython` in the docker environment
-it will run in a docker container. This will mount your current working directory in container as well. In addition,
-you can specificy an additional mount directory with the --data argument:
+it will run in a docker container. This will mount your current working directory in the container as well. In addition,
+you can specificy an extra volume to mount with the --data argument:
 ```
 ipython --data /my/data/dir
 python --data /my/data/dir
