@@ -9,6 +9,7 @@ To install
 1. git clone https://github.com/joshloyal/dockerenv.git
 2. add the following lines to your `.bashrc` or `.bash_profile`:
 ```
+export DOCKON_HOME=$HOME/.dockerenv
 export PATH=/path/to/dockerenv/scripts:$PATH
 source /path/to/dockerenv/scripts/dockerenvwrapper
 ```
@@ -22,7 +23,7 @@ mkdockerenv denv --id jupyter/datascience-notebook --workdir /home/jovyan/work
 ```
 You can then open up the dockerenv similar to virtualenvwrapper
 ```
-workon denv
+dockon denv
 ```
 To deactivate the dockerenv simply type `deactivate`. When you run `python` or `ipython` in the docker environment
 it will run in a docker container. This will mount your current working directory in the container as well. In addition,

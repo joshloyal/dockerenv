@@ -3,7 +3,7 @@
 
 function cddockerenv() {
     dockerenv_verify_workon_home || return 1
-    cd $WORKON_HOME
+    cd $DOCKON_HOME
 }
 
 # Set up tab completion (Adapted from virtualenvwrapper)
@@ -14,19 +14,19 @@ function dockerenv_setup_tab_completion() {
             local cur="$2"
             COMPREPLY=( $(cddockerenv && compgen -d -- "${cur}" ) )
         }
-        complete -o nospace -F _cddockerenv_complete workon
+        complete -o nospace -F _cddockerenv_complete dockon
         complete -o nospace -F _cddockerenv_complete rmdockerenv
     fi
 }
 
-function workon() {
+function dockon() {
     # get the location of the docker environment
-    WORKON_ENV=$1
+    DOCKON_ENV=$1
     dockerenv_verify_workon_environment $WORKON_ENV || return 1
-    export WORKON_ENV
+    export DOCKON_ENV
 
     # find the activation scripts
-    activate="$WORKON_HOME/$WORKON_ENV/bin/activate"
+    activate="$DOCKON_HOME/$DOCKON_ENV/bin/activate"
     if [ ! -f "$activate" ]; then
         echo "ERROR: Environment '$environment' does not contain an activate script." >&2
         return 1
@@ -46,7 +46,7 @@ function rmdockerenv() {
     typeset env_name
     for env_name in $@; do
         echo "Removing $env_name..."
-        typeset env_dir="$WORKON_HOME/$env_name"
+        typeset env_dir="$DOCKON_HOME/$env_name"
         if [ "$DOCKER_ENV" == "$env_dir" ]; then
             echo "ERROR: You cannont remove the active environment ('$env_name')." >&2
             echo "Either switch to another environment, or run 'deactivate'." >&2
@@ -56,7 +56,7 @@ function rmdockerenv() {
         # Move out of the current directory to one known to be safe,
         # in case we are inside the environment somewhere.
         typeset prior_dir="$(pwd)"
-        cd "$WORKON_HOME"
+        cd "$DOCKON_HOME"
         command \rm -rf "$env_dir"
 
         # if the directory we used to be in still exists, move back to it.
@@ -77,8 +77,8 @@ function killdockerenv() {
 
 function dockerenv_verify_workon_home() {
     # check that the workon home directory exists
-    if [ ! -d "$WORKON_HOME/" ]; then
-        echo "ERROR: Docker environments directory $WORKON_HOME does not exist." 1>&2
+    if [ ! -d "$DOCKON_HOME/" ]; then
+        echo "ERROR: Docker environments directory $DOCKON_HOME does not exist." 1>&2
         return 1
     fi
     return 0
@@ -86,7 +86,7 @@ function dockerenv_verify_workon_home() {
 
 function dockerenv_verify_workon_environment() {
     typeset env_name="$1"
-    if [ ! -d "$WORKON_HOME/$env_name" ]; then
+    if [ ! -d "$DOCKON_HOME/$env_name" ]; then
         echo "ERROR: Environment '$env_name' does not exist." >&2
         return 1
     fi
@@ -102,7 +102,6 @@ function dockerenv_verify_active_environment() {
 }
 
 function dockerenv_initialize() {
-    export WORKON_HOME="$HOME/.dockerenv"
     dockerenv_verify_workon_home || return 1
     dockerenv_setup_tab_completion
 
